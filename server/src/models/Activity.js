@@ -1,15 +1,29 @@
+const { DataTypes } = require('sequelize');
+
 module.exports = (sequelize) => {
-    // defino el modelo
-    sequelize.define('Activity', {
-      idd: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true,
-     },
-     name: {
+
+  sequelize.define('Activity', {
+      id:{
+          type:DataTypes.INTEGER,
+          allowNull:false,
+          primaryKey:true,
+          autoIncrement: true,
+      },
+      name:{
+          type:DataTypes.STRING,
+          allowNull:false,
+      },
+      dificultad:{
         type: DataTypes.STRING,
-        allowNull: false,
-     },
-    });
-  };
+        allowNull:false,
+      },
+      duración:{
+        type: DataTypes.STRING,
+        allowNull:false,
+      },
+      temporada:{
+        type: DataTypes.STRING,
+        allowNull:false,
+      }
+  }, {timestamps:false});
+};

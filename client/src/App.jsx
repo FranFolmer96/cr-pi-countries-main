@@ -1,35 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react'
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import Nav from './components/nav/Nav.jsx';
+import LayoutHome from './components/layout/Layout.jsx';
+import AccessButton from './components/Acces/AccessButton.jsx';
+import Error404 from './components/error404/Error404.jsx'
+import Detail from './components/detail/Detail.jsx';
+import { Form }  from'./components/ActivitiForm/ActivitiForm.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+  const { pathname } = useLocation()
+  const [access, setAccess] = useState(false)
+  const [countriesData, setCountriesData] = useState([]);
+  const [countriesDataName, setCountriesDataName] = useState([]);
+  const [nameFilter, setNameFilter] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  
+  const handleNameFilter = (e) => {
+    setNameFilter(e.target.value);
+  };
+
+
+  useEffect(() => {
+    
+    const URL = 'http://localhost:3001/countries/All';
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(URL);
+        setCountriesData(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData(); // Llama a la función sin invocarla para evitar el bucle infinito
+
+  }, []); // Agrega un array vacío como dependencia para que se ejecute solo una vez
+
+
+    const navigate = useNavigate()
+
+
+   return (
+      <div className='App'>
+         { pathname !== '/' && <Nav nameFilter={nameFilter} handleNameFilter={handleNameFilter}/> }  
+         <Routes>
+            <Route path="/" element={<AccessButton setAccess={setAccess} navigate={navigate} />} />
+            <Route path='/home' element={<LayoutHome nameFilter={nameFilter} handleNameFilter={handleNameFilter} countriesData={countriesData} currentPage={currentPage} setCurrentPage={setCurrentPage} countriesDataName={countriesDataName}/>}/>
+            <Route path="/detail/:id" element={<Detail />} /> 
+            <Route path="*" element={<Error404 />} /> 
+            <Route path='/AtivitiForm' element= {<Form/>}/>
+         </Routes>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+   );
 }
 
-export default App
+export default App;

@@ -4,39 +4,50 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('Country', {
-    idd: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
-   },
-   name: {
+    id:{
       type: DataTypes.STRING,
       allowNull: false,
-   },
-  flags: {
-      type: DataTypes.TEXT,
-      allowNull: false
-   },
-   continents: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-      defaultValue: 'Unknown'
-   },
-   capital: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-   },
-   area: {
-      type:DataTypes.BOOLEAN,
-      allowNull: true
-   },
-   population: {
-      type: DataTypes.BOOLEAN,
+      primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: true
-   }
-}, {
-   timestamps: false
+    },
+    officialName:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    image:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    continents:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    capital:{
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    subregion:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    area:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    population:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    maps:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    timezones:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    }
   });
 };
