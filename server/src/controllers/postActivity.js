@@ -1,4 +1,4 @@
-const { Activity, Country, user_twist } = require("../db");
+const { Activities, Countries, user_twist } = require("../db");
 
 const createActivityController = async (req, res) => {
   try {
@@ -11,7 +11,7 @@ const createActivityController = async (req, res) => {
     }
 
     // Crea la actividad en la base de datos
-    const createdActivity = await Activity.create({
+    const createdActivity = await Activities.create({
       name,
       dificultad,
       duración,
@@ -20,7 +20,7 @@ const createActivityController = async (req, res) => {
 
     // Relaciona la actividad con los países a través de la tabla intermedia
     if (countries.length > 0) {
-      const countryInstances = await Country.findAll({
+      const countryInstances = await Countries.findAll({
         where: { id: countries }
       });
 

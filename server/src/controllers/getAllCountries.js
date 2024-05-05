@@ -1,24 +1,24 @@
-const { Country } = require("../db");
+const { Countries } = require("../db");
 
 const getAllCountriesController = async () => {
   try {
-    const countries = await Country.findAll({
+    const countries = await Countries.findAll({
       attributes: ['id','name', 'officialName', 'image', 'continents', 'capital', 'subregion', 'area', 'population', 'maps', 'timezones'],
       raw: true
     });
 
-    const modifiedCountries = countries.map(country => ({
-      id: country.id,
-      name: country.name,
-      officialName: country.officialName,
-      image: country.image,
-      continents: country.continents,
-      capital: country.capital.slice(1, -1),
-      subregion: country.subregion,
-      area: country.area,
-      population: country.population,
-      maps: country.maps,
-      timezones: country.timezones.slice(1, -1)
+    const modifiedCountries = countries.map(countries => ({
+      id: countries.id,
+      name: countries.name,
+      officialName: countries.officialName,
+      image: countries.image,
+      continents: countries.continents,
+      capital: countries.capital.slice(1, -1),
+      subregion: countries.subregion,
+      area: countries.area,
+      population: countries.population,
+      maps: countries.maps,
+      timezones: countries.timezones.slice(1, -1)
     }));
 
     return modifiedCountries;

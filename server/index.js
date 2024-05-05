@@ -5,10 +5,12 @@ const routes = require('./src/routes/index.js');
 const cors = require('cors');
 const PORT = 3001;
 
+
+
 const startServer = async () => {
   // Sincroniza la base de datos
   try {
-    await conn.sync({ force: true });
+    await conn.sync();
     console.log('Base de datos sincronizada correctamente');
   } catch (error) {
     console.error('Error al sincronizar la base de datos:', error);

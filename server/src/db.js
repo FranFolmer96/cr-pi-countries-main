@@ -1,11 +1,13 @@
-require("dotenv").config();
+const dotenv = require("dotenv");
+dotenv.config ({ path: './api/.env' });
 const { Sequelize } = require("sequelize");
 const fs = require('fs');
 const path = require('path');
 
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
+console.log("datos de coneccion", DB_USER, DB_PASSWORD, DB_HOST );
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/countries`, {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
   logging: false,
   native: false,
 });
@@ -25,14 +27,15 @@ fs.readdirSync(path.join(__dirname, '/models'))
 modelDefiners.forEach((model) => model(sequelize));
 
 // Establecer relaciones entre modelos
-const { Country, Activity } = sequelize.models;
+const { Countries, Activities } = sequelize.models;
 
-Activity.belongsToMany(Country, { through: 'user_twist' });
-Country.belongsToMany(Activity, { through: 'user_twist' });
+Activities.belongsToMany(Countries, { through: 'user_twist' });
+Countries.belongsToMany(Activities, { through: 'user_twist' });
 
 // Exportar modelos y conexión
 module.exports = {
-  Country,
-  Activity,
+  Countries,
+  Activities,
   sequelize,
+  conn: sequelize,
 };

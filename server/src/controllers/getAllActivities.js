@@ -1,12 +1,12 @@
-const { Activity, Country, user_twist } = require("../db");
+const { Activities, Countries, user_twist } = require("../db");
 
 const getAllActivitiesController = async (req, res) => {
   try {
     // Obtén todas las actividades con información de los países relacionados
-    const activities = await Activity.findAll({
+    const activities = await Activities.findAll({
       include: [
         {
-          model: Country,
+          model: Countries,
           through: {
             model: user_twist,
             attributes: [] // Puedes especificar las columnas que deseas recuperar de user_twist
@@ -19,7 +19,7 @@ const getAllActivitiesController = async (req, res) => {
     res.status(200).json(activities);
   } catch (error) {
     console.error('Error al obtener actividades:', error);
-    res.status(500).json({ message: 'Error interno del servidor' });
+    res.status(500).json({ message: 'Error del servidor' });
   }
 };
 
