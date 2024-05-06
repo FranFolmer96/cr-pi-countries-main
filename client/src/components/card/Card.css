@@ -36,9 +36,7 @@
       padding-top: 15px;
       border: 1px solid #42424242;
       background-color: rgb(26, 26, 26); /* Color blanco con 80% de opacidad */
-      box-shadow: 1px 1px 0px hsl(0, 0%, 17%), 2px 2px 0px hsl(0, 0%, 42%),
-        3px 3px 0px hsl(0, 0%, 63%), 4px 4px 0px hsl(0, 0%, 100%),
-        5px 5px 0px hsl(0, 0%, 100%);
+      
     }
   
     .id_card {
